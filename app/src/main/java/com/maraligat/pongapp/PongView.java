@@ -14,6 +14,7 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder surfaceHolder;
 
     //thread vars
+    private PongThread pongThread;
 
 
     public PongView(Context context) {
@@ -21,19 +22,20 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         this.setFocusable(true);
+
         //create new thread over here
+        this.pongThread = new PongThread(surfaceHolder);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent msg){
-        //insert call to game thread here
-        return true;
+
+        return pongThread.getPongGame().keyPressed(keyCode);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        //start game thread here
-
+        pongThread.start();
     }
 
     @Override

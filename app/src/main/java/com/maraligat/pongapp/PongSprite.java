@@ -53,11 +53,12 @@ public class PongSprite {
 
     //Reverse trajectory methods
     public void reverseTrajectoryX(){
-        this.trajectory_x *= -1;
+
+        this.trajectory_x = this.trajectory_x * -1;
     }
 
     public void reverseTrajectoryY(){
-        this.trajectory_y *= -1;
+        this.trajectory_y = this.trajectory_y * -1;
     }
 
     //Random trajectory method

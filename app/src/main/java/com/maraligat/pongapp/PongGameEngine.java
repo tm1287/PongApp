@@ -11,7 +11,8 @@ import android.view.KeyEvent;
 
 public class PongGameEngine {
 
-    private int screenWidth, screenHeight;
+    private int screenWidth;
+    private int screenHeight;
     private PongSprite ball;
     private PongSprite paddle;
 
@@ -55,7 +56,7 @@ public class PongGameEngine {
         }
 
         //detect ceiling collision
-        if (ball.getY() >= 0 ) {
+        if (ball.getY() <= 0 ) {
             ball.reverseTrajectoryY();
         }
 
@@ -65,8 +66,9 @@ public class PongGameEngine {
         }
 
         //detect PADDLE collisions
-        if (ball.getX() >= paddle.getX() && ball.getX() <= paddle.getX() + paddle.getWidth() && ball.getY() >= paddle.getY()){
+        if (ball.getX() >= paddle.getX() && ball.getX() <= (paddle.getX() + paddle.getWidth()) && ball.getY() >= paddle.getY()){
             ball.reverseTrajectoryY();
+            System.err.println("PADDLE COLLISION DETECTED");
         }
     }
 
