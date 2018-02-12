@@ -3,6 +3,7 @@ package com.maraligat.pongapp;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.KeyEvent;
 
 /**
  * Created by Tejas Maraliga on 2/12/2018.
@@ -38,5 +39,45 @@ public class PongGameEngine {
         //draw ball and paddle
         ball.draw(canvas);
         paddle.draw(canvas);
+    }
+
+    public void update(){
+        ball.move();
+        this.detectCollisions();
+    }
+
+    private void detectCollisions(){
+        //if ball goes below paddle, create new ball
+        if (ball.getY() > (paddle.getY() + paddle.getHeight())){
+            //reset ball location to center of screen
+            ball.move(screenWidth/2, 20);
+            ball.randomTrajectory();
+        }
+
+        //detect ceiling collision
+        if (ball.getY() >= 0 ) {
+            ball.reverseTrajectoryY();
+        }
+
+        //detect wall collisions
+        if (ball.getX() >= screenWidth || ball.getX() <= 0){
+            ball.reverseTrajectoryX();
+        }
+
+        //detect PADDLE collisions
+        if (ball.getX() >= paddle.getX() && ball.getX() <= paddle.getX() + paddle.getWidth() && ball.getY() >= paddle.getY()){
+            ball.reverseTrajectoryY();
+        }
+    }
+
+    public boolean keyPressed(int keyCode){
+        if (keyCode == KeyEvent.KEYCODE_Q){
+            paddle.setX(paddle.getX() - paddle.getSpeed());
+        }
+        if (keyCode == KeyEvent.KEYCODE_W){
+            paddle.setX(paddle.getX() + paddle.getSpeed());
+        }
+
+        return true;
     }
 }
